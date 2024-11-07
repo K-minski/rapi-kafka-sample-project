@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="9cc0b0d9-a43b-45f9-80d0-535780f6446c" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="example.noSchema.topic - Consumer" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" zephyrTestName="" zephyrTestId="">
+  <con:settings id="010456e3-ab26-4348-bdba-07812cd6dfde">
+    <con:setting id="9cc0b0d9-a43b-45f9-80d0-535780f6446cfileName">example.noSchema.topic---Consumer</con:setting>
+  </con:settings>
+  <con:testStep type="multiConfigureTestStep" name="API Subscriber" id="3e461bb0-3246-4cb5-80f4-f134b51cc269">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaSubscribeTestStep" xsi:type="con:MultiConfigurationStep">
+      <con:kafkaSubscribeStep>
+        <con:operationId>7dc882b5-0cec-44e7-b9ac-c2125523af04</con:operationId>
+        <con:operationName>Subscribe</con:operationName>
+        <con:channelName>example.noSchema.topic</con:channelName>
+        <con:serviceName>Kafka Broker0</con:serviceName>
+        <con:endpoint>localhost:9092</con:endpoint>
+        <con:connectionProperties/>
+        <con:schemaRegistry/>
+        <con:messageType>JSON</con:messageType>
+        <con:keyType>JSON</con:keyType>
+        <con:closeConditionType>ANY_CONDITION</con:closeConditionType>
+        <con:maxIdleTime>10</con:maxIdleTime>
+        <con:maxMessagesReceived>10</con:maxMessagesReceived>
+        <con:maxRunTime>10</con:maxRunTime>
+        <con:assertion type="DataAndMetadataAssertion" id="e5a6ab71-d5f1-4194-aa22-93d503278db4" name="Smart Assertion" disabled="true">
+          <con:configuration xsi:type="con:DataAndMetadataAssertion">
+            <con:mode>Received Data</con:mode>
+            <con:elements>
+              <con:path>$['favorite_city']</con:path>
+              <con:element>favorite_city</con:element>
+              <con:operatorId>1</con:operatorId>
+              <con:enabled>true</con:enabled>
+              <con:expectedValue>Oslo</con:expectedValue>
+              <con:caseSensitive>true</con:caseSensitive>
+              <con:numberType>false</con:numberType>
+              <con:expectedDataType>1</con:expectedDataType>
+            </con:elements>
+            <con:elements>
+              <con:path>$['favorite_number']</con:path>
+              <con:element>favorite_number</con:element>
+              <con:operatorId>1</con:operatorId>
+              <con:enabled>true</con:enabled>
+              <con:expectedValue>4</con:expectedValue>
+              <con:caseSensitive>true</con:caseSensitive>
+              <con:numberType>true</con:numberType>
+              <con:expectedDataType>2</con:expectedDataType>
+            </con:elements>
+            <con:elements>
+              <con:path>$['favorite_color']</con:path>
+              <con:element>favorite_color</con:element>
+              <con:operatorId>1</con:operatorId>
+              <con:enabled>true</con:enabled>
+              <con:expectedValue>Pink</con:expectedValue>
+              <con:caseSensitive>true</con:caseSensitive>
+              <con:numberType>false</con:numberType>
+              <con:expectedDataType>1</con:expectedDataType>
+            </con:elements>
+            <con:originalMessage>{
+   "favorite_city" : "Oslo",
+   "favorite_number" : 4,
+   "favorite_color" : "Pink"
+}</con:originalMessage>
+          </con:configuration>
+        </con:assertion>
+        <con:ignoreMessagesBeforeConnect>false</con:ignoreMessagesBeforeConnect>
+      </con:kafkaSubscribeStep>
+    </con:config>
+  </con:testStep>
+  <con:properties>
+    <con:property>
+      <con:name>i</con:name>
+      <con:value>0</con:value>
+    </con:property>
+  </con:properties>
+  <con:reportParameters/>
+</con:testCase>

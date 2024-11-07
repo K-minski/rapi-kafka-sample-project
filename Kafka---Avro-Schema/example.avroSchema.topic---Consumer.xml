@@ -23,35 +23,6 @@
           <con:url>http://localhost:8085</con:url>
           <con:authProfile>No Authorization</con:authProfile>
         </con:schemaRegistry>
-        <con:environmentSpec>
-          <con:entry environmentId="854a670c-46b5-4e6f-81d3-fd6ae96e24e9">
-            <con:connectionSettings>
-              <con:subscribeProperties>
-                <con:property>
-                  <con:name>key.deserializer</con:name>
-                  <con:value>io.confluent.kafka.serializers.KafkaAvroDeserializer</con:value>
-                </con:property>
-                <con:property>
-                  <con:name>ssl.truststore.location</con:name>
-                  <con:value>\certificate\truststore.jks</con:value>
-                </con:property>
-                <con:property>
-                  <con:name>ssl.truststore.password</con:name>
-                  <con:value>123456</con:value>
-                </con:property>
-              </con:subscribeProperties>
-              <con:schemaRegistry>
-                <con:url>https://172.28.20.132:8085</con:url>
-                <con:authProfile>No Authorization</con:authProfile>
-              </con:schemaRegistry>
-              <con:closeConditionType>ANY_CONDITION</con:closeConditionType>
-              <con:maxIdleTime>60</con:maxIdleTime>
-              <con:maxMessagesReceived>50</con:maxMessagesReceived>
-              <con:maxRunTime>60</con:maxRunTime>
-              <con:ignoreMessagesBeforeConnect>false</con:ignoreMessagesBeforeConnect>
-            </con:connectionSettings>
-          </con:entry>
-        </con:environmentSpec>
         <con:messageType>JSON via Avro (Confluent)</con:messageType>
         <con:keyType>JSON</con:keyType>
         <con:closeConditionType>ANY_CONDITION</con:closeConditionType>

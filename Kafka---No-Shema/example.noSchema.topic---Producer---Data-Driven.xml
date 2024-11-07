@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:testCase xmlns:con="http://eviware.com/soapui/config" id="08ccbb9a-503f-40a8-90c4-b5d2817e7098" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="example.noSchema.topic - Producer" searchProperties="true" timeout="0">
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="08ccbb9a-503f-40a8-90c4-b5d2817e7098" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="example.noSchema.topic - Producer - Data Driven" searchProperties="true" timeout="0">
   <con:settings id="c2fa1e86-a330-4db3-a1f1-9a4ba81604cd">
-    <con:setting id="08ccbb9a-503f-40a8-90c4-b5d2817e7098fileName">example.noSchema.topic---Producer</con:setting>
+    <con:setting id="08ccbb9a-503f-40a8-90c4-b5d2817e7098fileName">example.noSchema.topic---Producer---Data-Driven</con:setting>
   </con:settings>
   <con:testStep type="datasource" name="Publisher Values" id="361ba0a1-0e1b-4da5-b9d8-5e1bedf17abc">
     <con:settings/>
@@ -90,102 +90,6 @@
       <dataSourceStep>Publisher Values</dataSourceStep>
       <targetStep>API Publisher - Random messages</targetStep>
       <discardResults>true</discardResults>
-    </con:config>
-  </con:testStep>
-  <con:testStep type="groovy" name="API Publisher via Script" id="615f73b4-edd9-4bca-9400-cee91bc2cdaf" disabled="true">
-    <con:settings/>
-    <con:config>
-      <script>import org.apache.kafka.clients.producer.*;
-import org.apache.kafka.common.serialization.StringSerializer;
-
-
-def kafkaEndpoint = "localhost:9092"
-def topic = "example.noSchema.topic"
-
-// Set up the producer properties
-Properties props = new Properties();
-props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaEndpoint);
-props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-
-// Create the producer object
-Producer&lt;String, String> producer = new KafkaProducer&lt;>(props);
-
-// Create a producer record
-def key = ""
-
-def message = '''
-{   
-	\"favorite_city\" : \"Berlin\",   
-	\"favorite_number\" : 4,   
-	\"favorite_color\" : \"Black\"
-}'''
-
-ProducerRecord&lt;String, String> record = new ProducerRecord&lt;>(topic, key, message);
-
-// Send the record
-producer.send(record)
-// Close the producer
-//producer.close();</script>
-    </con:config>
-  </con:testStep>
-  <con:testStep type="multiConfigureTestStep" name="API Publisher - Expected message 1" id="d821b69c-dbb8-4cee-9dbd-2bb070cdb1c1" disabled="true">
-    <con:settings/>
-    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaPublishTestStep" xsi:type="con:MultiConfigurationStep">
-      <con:kafkaPublishStep>
-        <con:operationId>31ea24ed-8d52-4feb-9dfa-cd9d265ae853</con:operationId>
-        <con:operationName>Publish</con:operationName>
-        <con:channelName>example.noSchema.topic</con:channelName>
-        <con:serviceName>Kafka Broker0</con:serviceName>
-        <con:endpoint>localhost:9092</con:endpoint>
-        <con:connectionProperties/>
-        <con:schemaRegistry/>
-        <con:messageType>JSON</con:messageType>
-        <con:message>{
-   "favorite_city" : "Berlin",
-   "favorite_number" : 4,
-   "favorite_color" : "Black"
-}</con:message>
-        <con:parameters>
-          <con:parameter>
-            <con:name>Parameter</con:name>
-            <con:value xsi:nil="true"/>
-            <con:type>Header</con:type>
-          </con:parameter>
-        </con:parameters>
-      </con:kafkaPublishStep>
-    </con:config>
-  </con:testStep>
-  <con:testStep type="multiConfigureTestStep" name="API Publisher - Other message 1" id="825a2cbb-5c2c-4bf3-b50f-4bf7a4a89b15" disabled="true">
-    <con:settings/>
-    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaPublishTestStep" xsi:type="con:MultiConfigurationStep">
-      <con:kafkaPublishStep>
-        <con:operationId>31ea24ed-8d52-4feb-9dfa-cd9d265ae853</con:operationId>
-        <con:operationName>Publish</con:operationName>
-        <con:channelName>example.noSchema.topic</con:channelName>
-        <con:serviceName>Kafka Broker0</con:serviceName>
-        <con:endpoint>localhost:9092</con:endpoint>
-        <con:connectionProperties/>
-        <con:schemaRegistry/>
-        <con:messageType>JSON</con:messageType>
-        <con:message>{
-   "favorite_city" : "Oslo",
-   "favorite_number" : 4,
-   "favorite_color" : "Pink"
-}</con:message>
-        <con:parameters>
-          <con:parameter>
-            <con:name>Key</con:name>
-            <con:value xsi:nil="true"/>
-            <con:type>Kafka</con:type>
-          </con:parameter>
-          <con:parameter>
-            <con:name>Partition</con:name>
-            <con:value>0</con:value>
-            <con:type>Kafka</con:type>
-          </con:parameter>
-        </con:parameters>
-      </con:kafkaPublishStep>
     </con:config>
   </con:testStep>
   <con:properties/>

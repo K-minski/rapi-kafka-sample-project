@@ -7,9 +7,4 @@
   <con:endpoints>
     <con:endpoint>localhost:9092</con:endpoint>
   </con:endpoints>
-  <con:environmentSpec>
-    <con:entry environmentId="854a670c-46b5-4e6f-81d3-fd6ae96e24e9">
-      <con:authProfile>Inherit From Parent</con:authProfile>
-    </con:entry>
-  </con:environmentSpec>
 </con:interface>

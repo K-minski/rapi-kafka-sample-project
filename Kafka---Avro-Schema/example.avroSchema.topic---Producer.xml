@@ -71,17 +71,6 @@
           <con:url>http://172.28.20.132:8085</con:url>
           <con:authProfile>No Authorization</con:authProfile>
         </con:schemaRegistry>
-        <con:environmentSpec>
-          <con:entry environmentId="854a670c-46b5-4e6f-81d3-fd6ae96e24e9">
-            <con:connectionSettings>
-              <con:publishProperties/>
-              <con:schemaRegistry>
-                <con:url>http://172.28.20.132:8085</con:url>
-                <con:authProfile>No Authorization</con:authProfile>
-              </con:schemaRegistry>
-            </con:connectionSettings>
-          </con:entry>
-        </con:environmentSpec>
         <con:messageType>JSON via Avro (Confluent)</con:messageType>
         <con:message>{
    "first_name" : "${Publisher Values#setName}",
@@ -113,67 +102,6 @@
       <discardResults>true</discardResults>
     </con:config>
   </con:testStep>
-  <con:testStep type="groovy" name="Publish do Kafka via Script" id="a71cf75d-1e9e-4583-b291-298b6fb38e7a" disabled="true">
-    <con:settings/>
-    <con:config>
-      <script>import org.apache.kafka.clients.producer.*;
-import org.apache.avro.Schema;
-import org.apache.avro.generic.*
-import io.confluent.kafka.serializers.*
-
-
-def kafkaEndpoint = "localhost:9092"
-def topic = "example.avroSchema.topic"
-def schemaRegistryUrl = "http://172.28.20.132:8085"
-
-// Set up the producer properties
-def kafkaProps = new Properties()
-// SSL/TLS Config
-// kafkaProps.put("security.protocol", "SSL")
-// kafkaProps.put("ssl.truststore.location", "C:\\Some\\path\\to\\the\\truststore.jks") // Update with your truststore path
-// kafkaProps.put("ssl.truststore.password", "password") // Update with your truststore password
-
-kafkaProps.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaEndpoint)
-kafkaProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
-kafkaProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName())
-kafkaProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
-
-// Create the producer object
-Producer&lt;GenericRecord, GenericRecord> producer = new KafkaProducer&lt;>(kafkaProps);
-
-String keySchemaString = null;
-String valueSchemaString = '''
-{
-        "namespace": "example.avro",
-        "type": "record",
-        "name": "ExampleValue",
-        "fields": [
-                 {"name": "first_name", "type": "string"},
-                 {"name": "favorite_city", "type": "string"},
-                 {"name": "favorite_number",  "type": ["int", "null"]},
-                 {"name": "favorite_color", "type": ["string", "null"]}
-        ]
-}
-''';
-// Parse schemas
-//Schema avroKeySchema = new Schema.Parser().parse(keySchemaString);
-Schema avroValueSchema = new Schema.Parser().parse(valueSchemaString);
-
-//Create and prepare the avro record
-GenericRecord avroMessageRecord = new GenericData.Record(avroValueSchema);
-avroMessageRecord.put("first_name", "David");
-avroMessageRecord.put("favorite_city", "Wrocław");
-avroMessageRecord.put("favorite_number", 7);
-avroMessageRecord.put("favorite_color", "Green");
-
-ProducerRecord&lt;String, GenericRecord> record = new ProducerRecord&lt;>(topic, null, avroMessageRecord);
-
-// Send the record
-producer.send(record);
-// Close the producer
-//producer.close();</script>
-    </con:config>
-  </con:testStep>
   <con:testStep type="multiConfigureTestStep" name="API Publisher Expected 1" id="259e2cf8-2877-4266-ae8d-c0597d772ffa" disabled="true">
     <con:settings/>
     <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaPublishTestStep" xsi:type="con:MultiConfigurationStep">
@@ -185,17 +113,6 @@ producer.send(record);
         <con:endpoint>localhost:9092</con:endpoint>
         <con:connectionProperties/>
         <con:schemaRegistry/>
-        <con:environmentSpec>
-          <con:entry environmentId="854a670c-46b5-4e6f-81d3-fd6ae96e24e9">
-            <con:connectionSettings>
-              <con:publishProperties/>
-              <con:schemaRegistry>
-                <con:url>http://172.28.20.132:8085</con:url>
-                <con:authProfile>No Authorization</con:authProfile>
-              </con:schemaRegistry>
-            </con:connectionSettings>
-          </con:entry>
-        </con:environmentSpec>
         <con:messageType>JSON via Avro (Confluent)</con:messageType>
         <con:keyType>JSON</con:keyType>
         <con:message>{
@@ -225,26 +142,6 @@ producer.send(record);
         <con:endpoint>localhost:9092</con:endpoint>
         <con:connectionProperties/>
         <con:schemaRegistry/>
-        <con:environmentSpec>
-          <con:entry environmentId="854a670c-46b5-4e6f-81d3-fd6ae96e24e9">
-            <con:connectionSettings>
-              <con:publishProperties>
-                <con:property>
-                  <con:name>ssl.truststore.location</con:name>
-                  <con:value>\certificate\truststore.jks</con:value>
-                </con:property>
-                <con:property>
-                  <con:name>ssl.truststore.password</con:name>
-                  <con:value>123456</con:value>
-                </con:property>
-              </con:publishProperties>
-              <con:schemaRegistry>
-                <con:url>https://localhost:8085</con:url>
-                <con:authProfile>No Authorization</con:authProfile>
-              </con:schemaRegistry>
-            </con:connectionSettings>
-          </con:entry>
-        </con:environmentSpec>
         <con:messageType>JSON via Avro (Confluent)</con:messageType>
         <con:keyType>JSON</con:keyType>
         <con:message>{

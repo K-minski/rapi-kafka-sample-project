@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="ee7bfa08-4f52-46c0-9476-a3d20d1bcddb" name="Kafka - example.avroSchema.topic">
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="a777138a-e1c8-4d05-8fb5-7524cc88f185" name="Kafka - Avro Schema - Scripts">
   <con:settings id="3e2e1b90-16bb-4a66-bdb4-08e4747e1463">
     <con:setting id="ee7bfa08-4f52-46c0-9476-a3d20d1bcddbfileName">Kafka---example.avroSchema.topic</con:setting>
+    <con:setting id="a777138a-e1c8-4d05-8fb5-7524cc88f185fileName">Kafka---Avro-Schema---Scripts</con:setting>
   </con:settings>
   <con:runType>PARALLELL</con:runType>
   <con:properties/>

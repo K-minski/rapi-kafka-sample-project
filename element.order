@@ -1,3 +1,5 @@
 Kafka-Broker0
-Kafka---example.noSchema.topic
-Kafka---example.avroSchema.topic
+Kafka---No-Shema
+Kafka---No-Shema---Scripts
+Kafka---Avro-Schema
+Kafka---Avro-Schema---Scripts

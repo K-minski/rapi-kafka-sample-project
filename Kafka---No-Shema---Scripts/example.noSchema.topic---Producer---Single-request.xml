@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="f16c29aa-e9bf-491b-ac33-86cf3b56b462" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="example.noSchema.topic - Producer - Single request" searchProperties="true" timeout="0">
+  <con:settings id="c2fa1e86-a330-4db3-a1f1-9a4ba81604cd">
+    <con:setting id="08ccbb9a-503f-40a8-90c4-b5d2817e7098fileName">example.noSchema.topic---Producer</con:setting>
+    <con:setting id="f16c29aa-e9bf-491b-ac33-86cf3b56b462fileName">example.noSchema.topic---Producer---Single-request</con:setting>
+  </con:settings>
+  <con:testStep type="groovy" name="Script API Publisher" id="05ead6ac-2cff-4e64-8c27-0be36f7fd3ae">
+    <con:settings/>
+    <con:config>
+      <script>import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.serialization.StringSerializer;
+
+
+def kafkaEndpoint = "localhost:9092"
+def topic = "example.noSchema.topic"
+
+// Set up the producer properties
+Properties props = new Properties();
+props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaEndpoint);
+props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+// Create the producer object
+Producer&lt;String, String> producer = new KafkaProducer&lt;>(props);
+
+// Create a producer record
+def key = ""
+
+def message = '''
+{   
+	\"favorite_city\" : \"Berlin\",   
+	\"favorite_number\" : 4,   
+	\"favorite_color\" : \"Black\"
+}'''
+
+ProducerRecord&lt;String, String> record = new ProducerRecord&lt;>(topic, key, message);
+
+// Send the record
+producer.send(record)
+// Close the producer
+//producer.close();</script>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>
