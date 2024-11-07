@@ -6,6 +6,7 @@ Kafka---No-Shema\example.noSchema.topic---Producer---Data-Driven.xml
 Kafka---No-Shema---Scripts\example.noSchema.topic---Consumer.xml
 Kafka---No-Shema---Scripts\example.noSchema.topic---Producer---Single-request.xml
 Kafka---Avro-Schema\example.avroSchema.topic---Consumer.xml
+Kafka---Avro-Schema\example.avroSchema.topic---Producer---Single-request.xml
 Kafka---Avro-Schema\example.avroSchema.topic---Producer.xml
 Kafka---Avro-Schema---Scripts\example.avroSchema.topic---Consumer.xml
-Kafka---Avro-Schema---Scripts\example.avroSchema.topic---Producer.xml
+Kafka---Avro-Schema---Scripts\example.avroSchema.topic---Producer---Single-request.xml

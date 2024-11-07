@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="7553346e-41ce-4e7a-927d-20def1be7f75" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="example.avroSchema.topic - Producer - Single request" searchProperties="true" timeout="0">
+  <con:settings id="88c80ebc-56ca-483d-9d57-7130a4395867">
+    <con:setting id="6b2b3c12-6661-41b0-b06d-d76bab08f7aafileName">example.avroSchema.topic---Producer</con:setting>
+    <con:setting id="7553346e-41ce-4e7a-927d-20def1be7f75fileName">example.avroSchema.topic---Producer---Single-request</con:setting>
+  </con:settings>
+  <con:testStep type="groovy" name="API Publisher via Script" id="0e6b7b24-c651-4af5-872e-458d236f8e33">
+    <con:settings/>
+    <con:config>
+      <script>import org.apache.kafka.clients.producer.*;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.*
+import io.confluent.kafka.serializers.*
+
+
+def kafkaEndpoint = "localhost:9092"
+def topic = "example.avroSchema.topic"
+def schemaRegistryUrl = "http://172.28.20.132:8085"
+
+// Set up the producer properties
+def kafkaProps = new Properties()
+// SSL/TLS Config
+// kafkaProps.put("security.protocol", "SSL")
+// kafkaProps.put("ssl.truststore.location", "C:\\Some\\path\\to\\the\\truststore.jks") // Update with your truststore path
+// kafkaProps.put("ssl.truststore.password", "password") // Update with your truststore password
+
+kafkaProps.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaEndpoint)
+kafkaProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
+kafkaProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName())
+kafkaProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
+
+// Create the producer object
+Producer&lt;GenericRecord, GenericRecord> producer = new KafkaProducer&lt;>(kafkaProps);
+
+String keySchemaString = null;
+String valueSchemaString = '''
+{
+        "namespace": "example.avro",
+        "type": "record",
+        "name": "ExampleValue",
+        "fields": [
+                 {"name": "first_name", "type": "string"},
+                 {"name": "favorite_city", "type": "string"},
+                 {"name": "favorite_number",  "type": ["int", "null"]},
+                 {"name": "favorite_color", "type": ["string", "null"]}
+        ]
+}
+''';
+// Parse schemas
+//Schema avroKeySchema = new Schema.Parser().parse(keySchemaString);
+Schema avroValueSchema = new Schema.Parser().parse(valueSchemaString);
+
+//Create and prepare the avro record
+GenericRecord avroMessageRecord = new GenericData.Record(avroValueSchema);
+avroMessageRecord.put("first_name", "David");
+avroMessageRecord.put("favorite_city", "Wrocław");
+avroMessageRecord.put("favorite_number", 7);
+avroMessageRecord.put("favorite_color", "Green");
+
+ProducerRecord&lt;String, GenericRecord> record = new ProducerRecord&lt;>(topic, null, avroMessageRecord);
+
+// Send the record
+producer.send(record);
+// Close the producer
+//producer.close();</script>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

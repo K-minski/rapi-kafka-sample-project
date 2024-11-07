@@ -3,12 +3,6 @@
   <con:settings id="0f192cc5-3477-4a94-9461-448dc6b427d8">
     <con:setting id="3f1e9db7-7308-4142-9c5f-0e8cc6bfb085fileName">example.avroSchema.topic---Consumer</con:setting>
   </con:settings>
-  <con:testStep type="delay" name="Wait for Publisher Values init" id="b8da7971-8aea-46e8-9602-caee975e1405">
-    <con:settings/>
-    <con:config>
-      <delay>500</delay>
-    </con:config>
-  </con:testStep>
   <con:testStep type="multiConfigureTestStep" name="API Subscriber" id="c14aa7e2-9ed2-44a8-ac3a-c94b46eb615f">
     <con:settings/>
     <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaSubscribeTestStep" xsi:type="con:MultiConfigurationStep">

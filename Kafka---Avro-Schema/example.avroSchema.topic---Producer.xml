@@ -102,64 +102,6 @@
       <discardResults>true</discardResults>
     </con:config>
   </con:testStep>
-  <con:testStep type="multiConfigureTestStep" name="API Publisher Expected 1" id="259e2cf8-2877-4266-ae8d-c0597d772ffa" disabled="true">
-    <con:settings/>
-    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaPublishTestStep" xsi:type="con:MultiConfigurationStep">
-      <con:kafkaPublishStep>
-        <con:operationId>9e2b5f8b-5b32-41da-881b-95068bf07852</con:operationId>
-        <con:operationName>Publish</con:operationName>
-        <con:channelName>example.avroSchema.topic</con:channelName>
-        <con:serviceName>Kafka Broker0</con:serviceName>
-        <con:endpoint>localhost:9092</con:endpoint>
-        <con:connectionProperties/>
-        <con:schemaRegistry/>
-        <con:messageType>JSON via Avro (Confluent)</con:messageType>
-        <con:keyType>JSON</con:keyType>
-        <con:message>{
-	"first_name" : "Dave",
-	"favorite_city" : "Wrocław",
-	"favorite_number" : {"int": 7},
-	"favorite_color" : {"string": "Green"}
-}</con:message>
-        <con:parameters>
-          <con:parameter>
-            <con:name>Key</con:name>
-            <con:value/>
-            <con:type>Kafka</con:type>
-          </con:parameter>
-        </con:parameters>
-      </con:kafkaPublishStep>
-    </con:config>
-  </con:testStep>
-  <con:testStep type="multiConfigureTestStep" name="API Publisher Other 1" id="7b39f35a-1b6a-4841-8f34-3f6e53b1db2b" disabled="true">
-    <con:settings/>
-    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaPublishTestStep" xsi:type="con:MultiConfigurationStep">
-      <con:kafkaPublishStep>
-        <con:operationId>9e2b5f8b-5b32-41da-881b-95068bf07852</con:operationId>
-        <con:operationName>Publish</con:operationName>
-        <con:channelName>example.avroSchema.topic</con:channelName>
-        <con:serviceName>Kafka Broker0</con:serviceName>
-        <con:endpoint>localhost:9092</con:endpoint>
-        <con:connectionProperties/>
-        <con:schemaRegistry/>
-        <con:messageType>JSON via Avro (Confluent)</con:messageType>
-        <con:keyType>JSON</con:keyType>
-        <con:message>{
-	"first_name" : "Becky",
-	"favorite_city" : "Oslo",
-	"favorite_number" : { "int": 4 },
-	"favorite_color" : { "string": "Pink" }
-}</con:message>
-        <con:parameters>
-          <con:parameter>
-            <con:name>Key</con:name>
-            <con:value/>
-            <con:type>Kafka</con:type>
-          </con:parameter>
-        </con:parameters>
-      </con:kafkaPublishStep>
-    </con:config>
-  </con:testStep>
   <con:properties/>
   <con:reportParameters/>
 </con:testCase>

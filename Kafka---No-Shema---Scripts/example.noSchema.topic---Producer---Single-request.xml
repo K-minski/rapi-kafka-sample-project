@@ -4,7 +4,7 @@
     <con:setting id="08ccbb9a-503f-40a8-90c4-b5d2817e7098fileName">example.noSchema.topic---Producer</con:setting>
     <con:setting id="f16c29aa-e9bf-491b-ac33-86cf3b56b462fileName">example.noSchema.topic---Producer---Single-request</con:setting>
   </con:settings>
-  <con:testStep type="groovy" name="Script API Publisher" id="05ead6ac-2cff-4e64-8c27-0be36f7fd3ae">
+  <con:testStep type="groovy" name="API Publisher via Script" id="05ead6ac-2cff-4e64-8c27-0be36f7fd3ae">
     <con:settings/>
     <con:config>
       <script>import org.apache.kafka.clients.producer.*;
