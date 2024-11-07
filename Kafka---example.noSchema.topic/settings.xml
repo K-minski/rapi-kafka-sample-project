@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite xmlns:con="http://eviware.com/soapui/config" id="bb30e32a-570a-43bf-a4ee-172ea8440723" name="Kafka - example.noSchema.topic">
+  <con:settings id="3e2e1b90-16bb-4a66-bdb4-08e4747e1463">
+    <con:setting id="IncludeOverview">true</con:setting>
+    <con:setting id="IncludeResults">true</con:setting>
+    <con:setting id="FlowLayout">false</con:setting>
+    <con:setting id="ErrorDetails">true</con:setting>
+    <con:setting id="IncludeCoverage">true</con:setting>
+    <con:setting id="bb30e32a-570a-43bf-a4ee-172ea8440723fileName">Kafka---example.noSchema.topic</con:setting>
+  </con:settings>
+  <con:runType>PARALLELL</con:runType>
+  <con:properties/>
+  <con:reportScript>testSuite.project.getWssContainer.getClass()</con:reportScript>
+  <con:reportParameters/>
+</con:testSuite>

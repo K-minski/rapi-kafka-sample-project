@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase xmlns:con="http://eviware.com/soapui/config" id="3f1e9db7-7308-4142-9c5f-0e8cc6bfb085" discardOkResults="false" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="example.avroSchema.topic - Consumer" searchProperties="true" timeout="0">
+  <con:settings id="0f192cc5-3477-4a94-9461-448dc6b427d8">
+    <con:setting id="3f1e9db7-7308-4142-9c5f-0e8cc6bfb085fileName">example.avroSchema.topic---Consumer</con:setting>
+  </con:settings>
+  <con:testStep type="delay" name="Wait for Publisher Values init" id="b8da7971-8aea-46e8-9602-caee975e1405">
+    <con:settings/>
+    <con:config>
+      <delay>500</delay>
+    </con:config>
+  </con:testStep>
+  <con:testStep type="multiConfigureTestStep" name="API Subscriber" id="c14aa7e2-9ed2-44a8-ac3a-c94b46eb615f">
+    <con:settings/>
+    <con:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" activeStep="kafkaSubscribeTestStep" xsi:type="con:MultiConfigurationStep">
+      <con:kafkaSubscribeStep>
+        <con:operationId>af0f853b-dbd5-49f4-b78c-4c2f0347a675</con:operationId>
+        <con:operationName>Subscribe</con:operationName>
+        <con:channelName>example.avroSchema.topic</con:channelName>
+        <con:serviceName>Kafka Broker0</con:serviceName>
+        <con:endpoint>172.28.20.132:9092</con:endpoint>
+        <con:connectionProperties/>
+        <con:schemaRegistry>
+          <con:url>http://localhost:8085</con:url>
+          <con:authProfile>No Authorization</con:authProfile>
+        </con:schemaRegistry>
+        <con:environmentSpec>
+          <con:entry environmentId="854a670c-46b5-4e6f-81d3-fd6ae96e24e9">
+            <con:connectionSettings>
+              <con:subscribeProperties>
+                <con:property>
+                  <con:name>key.deserializer</con:name>
+                  <con:value>io.confluent.kafka.serializers.KafkaAvroDeserializer</con:value>
+                </con:property>
+                <con:property>
+                  <con:name>ssl.truststore.location</con:name>
+                  <con:value>\certificate\truststore.jks</con:value>
+                </con:property>
+                <con:property>
+                  <con:name>ssl.truststore.password</con:name>
+                  <con:value>123456</con:value>
+                </con:property>
+              </con:subscribeProperties>
+              <con:schemaRegistry>
+                <con:url>https://172.28.20.132:8085</con:url>
+                <con:authProfile>No Authorization</con:authProfile>
+              </con:schemaRegistry>
+              <con:closeConditionType>ANY_CONDITION</con:closeConditionType>
+              <con:maxIdleTime>60</con:maxIdleTime>
+              <con:maxMessagesReceived>50</con:maxMessagesReceived>
+              <con:maxRunTime>60</con:maxRunTime>
+              <con:ignoreMessagesBeforeConnect>false</con:ignoreMessagesBeforeConnect>
+            </con:connectionSettings>
+          </con:entry>
+        </con:environmentSpec>
+        <con:messageType>JSON via Avro (Confluent)</con:messageType>
+        <con:keyType>JSON</con:keyType>
+        <con:closeConditionType>ANY_CONDITION</con:closeConditionType>
+        <con:maxIdleTime>10</con:maxIdleTime>
+        <con:maxMessagesReceived>50</con:maxMessagesReceived>
+        <con:maxRunTime>60</con:maxRunTime>
+        <con:ignoreMessagesBeforeConnect>false</con:ignoreMessagesBeforeConnect>
+      </con:kafkaSubscribeStep>
+    </con:config>
+  </con:testStep>
+  <con:properties/>
+  <con:reportParameters/>
+</con:testCase>

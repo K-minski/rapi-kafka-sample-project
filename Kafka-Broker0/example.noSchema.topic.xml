@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:channel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config" name="example.noSchema.topic" id="8dac236d-4a80-4b86-ba3f-e89e140f50b2">
+  <con:settings id="d9e1c868-d917-4b2a-8520-2adc411295eb">
+    <con:setting id="8dac236d-4a80-4b86-ba3f-e89e140f50b2fileName">example.noSchema.topic</con:setting>
+  </con:settings>
+  <con:subscribeOperation name="Subscribe" id="7dc882b5-0cec-44e7-b9ac-c2125523af04">
+    <con:settings/>
+  </con:subscribeOperation>
+  <con:publishOperation name="Publish" id="31ea24ed-8d52-4feb-9dfa-cd9d265ae853">
+    <con:settings/>
+  </con:publishOperation>
+</con:channel>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config" xsi:type="con:MessageDrivenService" id="6061f305-96e4-4997-9e28-fbef53f97611" name="Kafka Broker0" type="messagedrivenservice">
+  <con:settings id="f1879673-4b01-414b-aff4-fd9764b41189">
+    <con:setting id="6061f305-96e4-4997-9e28-fbef53f97611fileName">Kafka-Broker0</con:setting>
+  </con:settings>
+  <con:definitionCache/>
+  <con:endpoints>
+    <con:endpoint>localhost:9092</con:endpoint>
+  </con:endpoints>
+  <con:environmentSpec>
+    <con:entry environmentId="854a670c-46b5-4e6f-81d3-fd6ae96e24e9">
+      <con:authProfile>Inherit From Parent</con:authProfile>
+    </con:entry>
+  </con:environmentSpec>
+</con:interface>
