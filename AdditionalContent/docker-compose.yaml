@@ -1,0 +1,119 @@
+---
+version: '3'
+services:
+  zookeeper:
+    image: docker.io/confluentinc/cp-zookeeper:7.5.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+ 
+  broker0:
+    image: docker.io/confluentinc/cp-server:7.5.1
+    container_name: broker0
+    ports:
+      # To learn about configuring Kafka for access across networks see
+      # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: EXTERNAL:PLAINTEXT,INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: EXTERNAL://localhost:9092,INTERNAL://broker0:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_DURABILITY_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_CLUSTER_LINK_METADATA_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_TIER_METADATA_REPLICATION_FACTOR: 1
+      KAFKA_QUOTAS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: 'http://schemaregistry:8085'
+ 
+  schemaregistry:
+    image: docker.io/confluentinc/cp-schema-registry:7.5.1
+    container_name: schemaregistry
+    ports:
+      - "8085:8085"
+    depends_on:
+      - zookeeper
+      - broker0
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker0:29092'
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
+      SCHEMA_REGISTRY_HOST_NAME: schemaregistry
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8085"
+    
+
+  kafka-ui:
+    image: docker.io/provectuslabs/kafka-ui:latest
+    container_name: kafka_ui
+    ports:
+      - "8081:8080"
+    depends_on:
+      - broker0
+      - zookeeper
+      - schemaregistry
+    environment:
+      KAFKA_CLUSTERS_0_NAME: kafka-local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker0:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8085
+
+  init-kafka:
+    image: confluentinc/cp-server:7.5.1
+    depends_on:
+      - broker0
+    entrypoint: [ '/bin/sh', '-c' ]
+    command:
+      - |
+        # Waits until kafka is reachable
+        kafka-topics --bootstrap-server broker0:29092 --list
+        #
+        echo -e 'Creating Kafka example.noSchema.topic topic'
+        kafka-topics --bootstrap-server broker0:29092 --create --if-not-exists --topic example.noSchema.topic --replication-factor 1 --partitions 1 --config confluent.value.schema.validation=false --config confluent.key.schema.validation=false
+        #
+        echo -e 'Creating Kafka example.avroSchema.topic topic'
+        kafka-topics --bootstrap-server broker0:29092 --create --if-not-exists --topic example.avroSchema.topic --replication-factor 1 --partitions 1 --config confluent.value.schema.validation=true --config confluent.key.schema.validation=true
+        #
+        echo -e 'Successfully created the following topics:'
+        kafka-topics --bootstrap-server broker0:29092 --list
+         
+  # Disabled for now as it fails to add schemas on init (triggers to early)
+  
+  # init-schema-registry:
+  #   image: confluentinc/cp-schema-registry:7.5.1
+  #   depends_on:
+  #     - schemaregistry
+  #   entrypoint: [ '/bin/sh', '-c' ]
+  #   command:
+  #     - |
+  #       function schemaRegistryAvailable() {
+  #         curl -s localhost:8085 > /dev/null 
+  #       }
+  #       #
+  #       sleep 5
+  #       until schemaRegistryAvailable || [ $MAX_TRIES -eq 0 ]; do
+  #         echo "Waiting waiting for Schema registry to initialize, $((MAX_TRIES--)) remaining attempts..."
+  #         sleep 10
+  #       done
+  #       #
+  #       if [ $MAX_TRIES -eq 0 ]
+  #       then
+  #         echo "Error: Something Schema Registry did not respond. Contiunuie... (Set schamas manually)"
+  #         exit 1
+  #       fi
+  #       #
+  #       echo "Schema Registry available, initialize schamas..."
+  #       #
+  #       #
+  #       echo -e 'Creating Value Schema Registry'
+  #       curl -X POST -H "Content-Type: application/vnd.schemaregistry.v1+json" --data '{"schema": "{\"namespace\": \"example.avro\", \"type\": \"record\", \"name\": \"ExampleValue\", \"fields\": [ {\"name\": \"first_name\", \"type\": \"string\"}, {\"name\": \"favorite_city\", \"type\": \"string\"}, {\"name\": \"favorite_number\",  \"type\": [\"int\", \"null\"]}, {\"name\": \"favorite_color\", \"type\": [\"string\", \"null\"] } ] }" }' http://localhost:8085/subjects/example.avro.topic-value/versions
+  #       #
+  #       echo -e 'Creating Key Schema Registry'  
+  #       curl -X POST -H "Content-Type: application/vnd.schemaregistry.v1+json" --data '{"schema": "{ \"namespace\": \"example.avro\", \"type\": \"record\", \"name\": \"ExampleKey\", \"fields\": [ {\"name\": \"key\", \"type\": \"string\"} ] }"}' http://localhost:8085/subjects/example.avro.topic-key/versions
