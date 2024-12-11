@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Start Test Kafka Broker enviroment
-        run: docker compose -f $GITHUB_WORKSPACE/rapi-kafka-sample-project/AdditionalContent/kafka-broker.yaml up 
+        run: docker compose -f $GITHUB_WORKSPACE/AdditionalContent/kafka-broker.yaml up 
 
       - name: Start ReadyAPI Docker image to execute Functional tests
         run: docker run -v=$GITHUB_WORKSPACE:/project -e SLM_LICENSE_SERVER="https://api.slm.manage.smartbear.com:443" -e API_KEY=${{ secrets.SLM_ACCESSKEY }} -e COMMAND_LINE="'-sKafka - No Shema' '/%project%/'" -i smartbear/ready-api-soapui-testrunner:latest
